@@ -6,6 +6,9 @@ import androidx.fragment.app.FragmentManager;
 
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.e.w_audio_player.MusicPlayer.MusicPlayerFragment;
+
+
 public class PagerAdapter extends FragmentPagerAdapter{
 
     private int numOfTab;
@@ -21,7 +24,7 @@ public class PagerAdapter extends FragmentPagerAdapter{
             case 0:
                 return new SongsFragment();
             case 1:
-                return new BlankFragment();
+                return new MusicPlayerFragment();
             case 2:
                 return new BlankFragment();
                 default:

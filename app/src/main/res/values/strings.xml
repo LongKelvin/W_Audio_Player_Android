@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Audio Player</string>
     <string name="tabItem_songs" translatable="false">SONGS</string>
-    <string name="tabItem_album" translatable="false">ALBUMS</string>
+    <string name="tabItem_player" translatable="false">PLAYER</string>
     <string name="tabItem_artists" translatable="false">ARTISTS</string>
     <string name="navigation_menu" translatable="false">Navigation_menu</string>
     <string name="action_search" translatable="false">Action_search</string>

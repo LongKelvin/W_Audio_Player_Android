@@ -6,10 +6,13 @@ import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
+import android.media.PlaybackParams;
 import android.os.Build;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -17,9 +20,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.e.w_audio_player.ListSongs.PagerAdapter;
+import com.e.w_audio_player.MusicPlayer.MusicPlayerFragment;
+import com.e.w_audio_player.Notification.MusicService;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
@@ -33,7 +40,43 @@ public class MainActivity extends AppCompatActivity {
     private TabItem tabItemArtist;
     private TabItem tabItemAlbum;
     public PagerAdapter pagerAdapter;
+    public int currentPosition;
+    private MediaPlayer mp;
+    boolean isChange = false;
+    boolean isPlaying= true;
 
+
+    public boolean IsChange(){
+
+        return isChange;
+    }
+    public boolean IsPlaying(){
+        return isPlaying;
+    }
+    public void ResetChange(){
+        isChange = false;
+    }
+    public int getPos(){
+        return currentPosition;
+    }
+    public void setPos(int nextPosition){
+        if(this.currentPosition  != nextPosition){
+           // (MusicPlayerFragment)playerFragment.playSong(nextPosition);
+            isChange = true;
+            sendNotification(nextPosition);
+        }
+        this.currentPosition = nextPosition;
+        tabLayout.getTabAt(1).select();
+    }
+
+    public MediaPlayer getMediaPlayer(){
+        if(mp == null)
+            mp = new MediaPlayer();
+        return mp;
+    }
+    public TabLayout getTabLayout(){
+        return tabLayout;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         tabItemArtist = findViewById(R.id.tabItem_artists);
         tabItemAlbum = findViewById(R.id.tabItem_album);
         viewPager = findViewById(R.id.viewpager);
+        currentPosition = -1;
 
         pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
@@ -83,38 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Xin quyền truy cập từ người dùng
-    private static final String[] PERMISIONS={Manifest.permission.READ_EXTERNAL_STORAGE};
-    private static final int REQUEST_PERMISIONS =12345;
-    private static final int PERMISIONS_COUNT =1;
-    @SuppressLint("NewApi")
-    private boolean arePermisionDenied(){
-        for(int i = 0; i<PERMISIONS_COUNT;i++){
-            if(checkSelfPermission(PERMISIONS[i]) != PackageManager.PERMISSION_GRANTED){
-                return true;
-            }
-        }
-        return false;
-    }
 
-    @SuppressLint("NewApi")
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(arePermisionDenied()){
-            ((ActivityManager)(this.getSystemService(ACTIVITY_SERVICE))).clearApplicationUserData();
-            recreate();
-        }else{
-            onResume();
-        }
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && arePermisionDenied()) {
-            requestPermissions(PERMISIONS, REQUEST_PERMISIONS);
-        }
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -146,5 +159,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("NewApi")
+    public void sendNotification(int index) {
+        startService(index);
+    }
 
+    public void startService(int songIndex){
+        Intent serviceIntent = new Intent(this, MusicService.class);
+        serviceIntent.putExtra("songIndex", String.valueOf(songIndex));
+        ContextCompat.startForegroundService(this, serviceIntent);
+    }
+    public void stopService(){
+        Intent serviceIntent = new Intent(this, MusicService.class);
+        this.stopService(serviceIntent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isPlaying= false;
+
+        mp.stop();
+        stopService();
+    }
 }

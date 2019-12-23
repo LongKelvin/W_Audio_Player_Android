@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.e.w_audio_player.ListSongs.BlankFragment"
-    android:background="#751414">
+    tools:context="com.e.w_audio_player.MusicPlayer.BlankFragment"
+    android:background="@drawable/dark_background_galaxy">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

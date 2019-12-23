@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+
 import com.e.w_audio_player.R;
+
 
 /**
  * A simple {@link Fragment} subclass.

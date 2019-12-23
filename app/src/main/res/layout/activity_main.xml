@@ -8,6 +8,7 @@
     android:background="@drawable/dark_background_galaxy"
     tools:context=".MainActivity"
     android:orientation="vertical">
+
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
@@ -32,7 +33,7 @@
             android:id="@+id/tabItem_album"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tabItem_album" />
+            android:text="@string/tabItem_player" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabItem_artists"
@@ -44,15 +45,24 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content">
 
-    <SearchView
-        android:layout_width="97dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="600dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="600dp" />
+        <TextView
+            android:id="@+id/songTitle"
+            android:layout_width="298dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/tabTextSelectedColor" />
+
+        <SearchView
+            android:layout_width="97dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="600dp"
+            android:layout_marginLeft="600dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.viewpager.widget.ViewPager>
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.e.w_audio_player.ListSongs;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.e.w_audio_player.R;
 
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> {
     ArrayList<HashMap<String, String>> dataSong;
+    Context context;
 
     public SongsAdapter(ArrayList<HashMap<String, String>> playList) {
         SongsManager songsManager = new SongsManager();
@@ -26,7 +27,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.playlist_item, parent,false);
-
+        context = parent.getContext();
         return new ViewHolder(itemView);
     }
 
@@ -46,6 +47,8 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.songTitle);
+
         }
+
     }
 }

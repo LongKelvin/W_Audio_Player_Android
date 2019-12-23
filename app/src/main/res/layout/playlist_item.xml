@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/f_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:background="@color/cardview_shadow_end_color"
     android:gravity="center"
-    android:padding="5dp"
-    android:background="@color/cardview_shadow_end_color">
-    <TextView
-        android:id="@+id/songTitle"
-        android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <LinearLayout
+        android:id="@+id/child_layout"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:padding="10dp"
-        android:color="#f3f3f3"/>
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_music_listitem"
+            tools:srcCompat="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/songTitle"
+            android:layout_width="305dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/tabTextForeColor"
+            android:textSize="14sp" />
+    </LinearLayout>
 </LinearLayout>
