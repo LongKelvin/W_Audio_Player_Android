@@ -57,6 +57,6 @@ public class StartupScreenActivity extends AppCompatActivity {
                 startActivity(new Intent(StartupScreenActivity.this, MainActivity.class));
                 finish();
             }
-        }, secondsDelayed * 5000);
+        }, secondsDelayed * 3000);
     }
 }
