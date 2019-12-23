@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.PlaybackParams;
 import android.os.Build;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -30,6 +32,7 @@ import com.google.android.material.tabs.TabLayout;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static final String LOG ="THONG TIN DEBUG : ";
 
     private TabLayout tabLayout;
     private ViewPager viewPager;

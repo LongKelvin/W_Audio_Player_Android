@@ -39,9 +39,14 @@
     <string name="recording">recording</string>
     <string name="play">play</string>
     <string name="volume">volume:</string>
-    <string name="error">Auto Recognize Mode Off!</string>
+    <string name="error">Auto Recognize Mode Off</string>
     <string name="suss">Auto Recognize Mode On</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="recognizing">Recognizing...</string>
+    <string name="result_artist_view">Artist</string>
+    <string name="no_internet_connection">No Internet Connection !</string>
+    <string name="NotificationSongNULL">WE CAN NOT FIND THIS SONG! TRY AGAIN</string>
+
+
 </resources>
