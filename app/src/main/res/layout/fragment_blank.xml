@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.e.w_audio_player.MusicPlayer.BlankFragment"
-    android:background="#751414">
+    android:background="@drawable/dark_background_galaxy">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
