@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,13 +15,15 @@ import com.e.w_audio_player.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> {
+public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> implements Filterable {
     ArrayList<HashMap<String, String>> dataSong;
+    ArrayList<HashMap<String, String>> dataSongFull;
     Context context;
 
     public SongsAdapter(ArrayList<HashMap<String, String>> playList) {
         SongsManager songsManager = new SongsManager();
         dataSong = songsManager.getPlayList();
+        dataSongFull = songsManager.getPlayList();
     }
 
     @NonNull
@@ -51,4 +55,42 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
         }
 
     }
+
+    @Override
+    public Filter getFilter() {
+        return songFillter;
+    }
+
+    private  ArrayList<HashMap<String, String>> songFillterArr = new ArrayList<>();
+    private Filter songFillter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+           // ArrayList<HashMap<String, String>> songFillterArr = new ArrayList<>();
+            if(constraint == null || constraint.length()==0){
+                songFillterArr.addAll(dataSongFull);
+            }
+            else {
+                String fillterKey = constraint.toString().toLowerCase().trim();
+                for (HashMap<String, String>  songs : dataSongFull){
+                    if(songs.get("songTitle").toLowerCase().contains(fillterKey)){
+                        songFillterArr.add(songs);
+                    }
+
+                }
+            }
+            FilterResults result = new FilterResults();
+            result.values = songFillterArr;
+            return result;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            dataSong.clear();
+            for (HashMap<String, String>  songs : songFillterArr){
+                dataSong.add(songs);
+                notifyDataSetChanged();
+            }
+        }
+    };
 }

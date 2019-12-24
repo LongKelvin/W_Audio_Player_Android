@@ -21,6 +21,9 @@ public class SongsManager {
                 Environment.DIRECTORY_MUSIC )));
         addMusicFileFrom(String.valueOf(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DOWNLOADS )));
+        addMusicFileFrom(String.valueOf(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_RINGTONES )));
+
         return songsList;
     }
 
@@ -38,7 +41,7 @@ public class SongsManager {
             song.put("songPath", file.getPath());
 
             // Add file mp3
-            if(file.getPath().endsWith(".mp3")){
+            if(file.getPath().endsWith(".mp3") || file.getPath().endsWith(".wav")){
                 songsList.add(song);
             }
 
