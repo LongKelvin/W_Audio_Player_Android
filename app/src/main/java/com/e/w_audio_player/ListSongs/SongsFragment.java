@@ -61,7 +61,6 @@ public class SongsFragment extends Fragment {
                         Intent intent = new Intent(getContext(),  MusicPlayerFragment.class);
                         // Sending songIndex to PlayerActivity
                         ((MainActivity)getActivity()).setPos(position);
-                        Log.v("Hello", String.valueOf(position));
                         //getContext().startActivity(intent);
                     }
 
@@ -71,10 +70,10 @@ public class SongsFragment extends Fragment {
                         // Sending songIndex to PlayerActivity
                         ((MainActivity)getActivity()).setPos(position);
 
-                        Log.v("Hello", String.valueOf(position));
                     }
                 })
         );
+
     }
 
     public void initView(){

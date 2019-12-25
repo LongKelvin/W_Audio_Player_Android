@@ -1,6 +1,7 @@
 package com.e.w_audio_player.ListSongs;
 
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,5 +47,22 @@ public class SongsManager {
             }
 
         }
+    }
+    public int getIndex(String dataPath){
+        int i = -1;
+        dataPath = dataPath.substring(0, (dataPath.length() - 4));
+        SongsManager songsManager = new SongsManager();
+        dataPath = dataPath.toLowerCase();
+        for(HashMap<String, String> song: songsManager.getPlayList()){
+            i++;
+            Log.v("songIndex __ test", String.valueOf(i));
+            String temp = song.get("songPath").substring(0, (song.get("songPath").length() - 4));
+            Log.v("songIndex __ test", temp);
+            Log.v("songIndex __ test", dataPath);
+            if(temp.toLowerCase().contains(dataPath)){
+                return i;
+            }
+        }
+        return -1;
     }
 }

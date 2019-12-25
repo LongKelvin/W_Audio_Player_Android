@@ -1,11 +1,10 @@
 package com.e.w_audio_player.ListSongs;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,15 +14,16 @@ import com.e.w_audio_player.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> implements Filterable {
+public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> {
     ArrayList<HashMap<String, String>> dataSong;
-    ArrayList<HashMap<String, String>> dataSongFull;
     Context context;
 
     public SongsAdapter(ArrayList<HashMap<String, String>> playList) {
+        dataSong = playList;
+    }
+    public SongsAdapter() {
         SongsManager songsManager = new SongsManager();
         dataSong = songsManager.getPlayList();
-        dataSongFull = songsManager.getPlayList();
     }
 
     @NonNull
@@ -55,42 +55,24 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
         }
 
     }
+    public void filter(String text) {
+        SongsManager songsManager = new SongsManager();
 
-    @Override
-    public Filter getFilter() {
-        return songFillter;
-    }
-
-    private  ArrayList<HashMap<String, String>> songFillterArr = new ArrayList<>();
-    private Filter songFillter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-           // ArrayList<HashMap<String, String>> songFillterArr = new ArrayList<>();
-            if(constraint == null || constraint.length()==0){
-                songFillterArr.addAll(dataSongFull);
-            }
-            else {
-                String fillterKey = constraint.toString().toLowerCase().trim();
-                for (HashMap<String, String>  songs : dataSongFull){
-                    if(songs.get("songTitle").toLowerCase().contains(fillterKey)){
-                        songFillterArr.add(songs);
-                    }
-
+        dataSong.clear();
+        if(text.isEmpty()){
+            dataSong.addAll(songsManager.getPlayList());
+        } else{
+            text = text.toLowerCase();
+            for(HashMap<String, String> song: songsManager.getPlayList()){
+                if(song.get("songTitle").toLowerCase().contains(text)){
+                    dataSong.add(song);
                 }
             }
-            FilterResults result = new FilterResults();
-            result.values = songFillterArr;
-            return result;
         }
+        notifyDataSetChanged();
+    }
 
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-
-            dataSong.clear();
-            for (HashMap<String, String>  songs : songFillterArr){
-                dataSong.add(songs);
-                notifyDataSetChanged();
-            }
-        }
-    };
+    public  String getPath(int index){
+        return dataSong.get(index).get("songPath");
+    }
 }

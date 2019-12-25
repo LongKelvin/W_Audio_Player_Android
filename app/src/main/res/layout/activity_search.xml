@@ -15,11 +15,17 @@
 
         <SearchView
             android:id="@+id/search_view"
-            android:contextClickable="true"
-            android:focusedByDefault="true"
-
-            android:searchHintIcon="@color/tabTextForeColor"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#E8E8E9"
+            android:contextClickable="true"
+            android:focusable="auto"
+            android:focusedByDefault="true"
+            android:searchHintIcon="@color/tabTextForeColor"
+            android:theme="@style/Notitle" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

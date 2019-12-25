@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.e.w_audio_player.ListSongs.PagerAdapter;
+import com.e.w_audio_player.ListSongs.SongsManager;
 import com.e.w_audio_player.MusicPlayer.MusicPlayerFragment;
 import com.e.w_audio_player.Notification.MusicService;
 import com.google.android.material.tabs.TabItem;
@@ -147,11 +148,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(id == R.id.action_search){
-            Intent intent = new Intent(this,SearchActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(this,SearchActivity.class);
+//            startActivity(intent);
+
+            Intent i = new Intent(this, SearchActivity.class);
+            startActivityForResult(i, 100);
 
         }
         if(id == R.id.recognizeSongs){
+            if(isPlaying){
+                mp.pause();
+            }
             Intent intent = new Intent(this,RecognizeSongsActivity.class);
             startActivity(intent);
         }
@@ -181,5 +188,19 @@ public class MainActivity extends AppCompatActivity {
 
         mp.stop();
         stopService();
+    }
+    @Override
+    protected void onActivityResult(int requestCode,
+                                    int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == 100){
+            String currentPath = data.getExtras().getString("songPath");
+            Log.v("datapath", currentPath);
+            // play selected song
+            SongsManager songsManager = new SongsManager();
+            setPos(songsManager.getIndex(currentPath));
+            Log.v("songIndex", String.valueOf(songsManager.getIndex(currentPath)));
+        }
+
     }
 }
